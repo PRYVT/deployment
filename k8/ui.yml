@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pryvt-ui-deployment
+  labels:
+    app: pryvt-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pryvt-ui
+  template:
+    metadata:
+      labels:
+        app: pryvt-ui
+    spec:      
+      containers:
+        - name: pryvt-ui-container
+          image: lab0mb4/pryvt_ui:development
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128M"
+              cpu: "0.5"
+          env:
+            - name: HOST_URL
+              value: localhost
+          ports:
+            - containerPort: 5518
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pryvt-ui-svc
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 5518
+  selector:
+    app: pryvt-ui
