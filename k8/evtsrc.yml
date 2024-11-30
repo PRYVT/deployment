@@ -51,7 +51,7 @@ spec:
             claimName: task-pv-claim          
       containers:
         - name: evtsrc-server
-          image: lab0mb4/evtsrc:v0.4.4
+          image: lab0mb4/evtsrc
           imagePullPolicy: Always
           resources:
             limits:
@@ -59,6 +59,7 @@ spec:
               cpu: "0.5"
           ports:
             - containerPort: 5515
+            - containerPort: 5521
           volumeMounts:
           - mountPath: "/app/db_files"
             name: evt-src-db-storage
@@ -70,7 +71,11 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 80
+  - name: http
+    port: 80
     targetPort: 5515
+  - name: tcp
+    port: 5521
+    targetPort: 5521
   selector:
     app: evtsrc-server

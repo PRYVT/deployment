@@ -29,6 +29,8 @@ spec:
           env:
             - name: EVENT_SOURCING_CLIENT_URL
               value: "http://evtsrc-server.default.svc.cluster.local"
+            - name: EVENT_SOURCING_CLIENT_TCP
+              value: "evtsrc-server.default.svc.cluster.local:5521"
           ports:
             - containerPort: 5516
           volumeMounts:
