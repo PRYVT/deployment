@@ -36,6 +36,20 @@ spec:
             name: pryvt-identification-command-svc
             port:
               number: 80
+      - path: /api/v1/posting/query/(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: pryvt-posting-query-svc
+            port:
+              number: 80
+      - path: /api/v1/posting/command/(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: pryvt-posting-command-svc
+            port:
+              number: 80
       - path: /(.*)
         pathType: Prefix
         backend:
