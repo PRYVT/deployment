@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pryvt-identification-query-deployment
+  name: pryvt-posting-query-deployment
   labels:
-    app: pryvt-identification-query
+    app: pryvt-posting-query
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: pryvt-identification-query
+      app: pryvt-posting-query
   template:
     metadata:
       labels:
-        app: pryvt-identification-query
+        app: pryvt-posting-query
     spec:
       volumes:
-        - name: pryvt-identification-query-storage
+        - name: pryvt-posting-query-storage
           persistentVolumeClaim:
             claimName: task-pv-claim          
       containers:
-        - name: pryvt-identification-query-container
-          image: lab0mb4/pryvt_identification_query:development
+        - name: pryvt-posting-query-container
+          image: lab0mb4/pryvt_posting_query:development
           imagePullPolicy: Always
           resources:
             limits:
@@ -32,20 +32,20 @@ spec:
             - name: SIGNING_SECRET
               value: "example_secret_key"
           ports:
-            - containerPort: 5517
+            - containerPort: 5520
           volumeMounts:
           - mountPath: "/app/db_files"
-            name: pryvt-identification-query-storage
+            name: pryvt-posting-query-storage
           
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: pryvt-identification-query-svc
+  name: pryvt-posting-query-svc
 spec:
   type: ClusterIP
   ports:
   - port: 80
-    targetPort: 5517
+    targetPort: 5520
   selector:
-    app: pryvt-identification-query
+    app: pryvt-posting-query

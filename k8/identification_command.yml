@@ -20,7 +20,7 @@ spec:
             claimName: task-pv-claim          
       containers:
         - name: pryvt-identification-command-container
-          image: lab0mb4/identification_command:development
+          image: lab0mb4/pryvt_identification_command:development
           imagePullPolicy: Always
           resources:
             limits:
