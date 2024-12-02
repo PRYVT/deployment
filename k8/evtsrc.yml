@@ -36,7 +36,7 @@ metadata:
   labels:
     app: evtsrc-server
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: evtsrc-server
@@ -51,7 +51,7 @@ spec:
             claimName: task-pv-claim          
       containers:
         - name: evtsrc-server
-          image: lab0mb4/evtsrc
+          image: lab0mb4/evtsrc:development
           imagePullPolicy: Always
           resources:
             limits:
