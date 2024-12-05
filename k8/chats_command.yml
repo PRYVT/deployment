@@ -34,7 +34,7 @@ spec:
             - name: SIGNING_SECRET
               value: "example_secret_key"
           ports:
-            - containerPort: 5519
+            - containerPort: 5522
           volumeMounts:
           - mountPath: "/app/db_files"
             name: pryvt-chats-command-storage
@@ -48,6 +48,6 @@ spec:
   type: ClusterIP
   ports:
   - port: 80
-    targetPort: 5519
+    targetPort: 5522
   selector:
     app: pryvt-chats-command
