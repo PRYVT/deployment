@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pryvt-chats-command-deployment
+  labels:
+    app: pryvt-chats-command
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pryvt-chats-command
+  template:
+    metadata:
+      labels:
+        app: pryvt-chats-command
+    spec:
+      volumes:
+        - name: pryvt-chats-command-storage
+          persistentVolumeClaim:
+            claimName: task-pv-claim          
+      containers:
+        - name: pryvt-chats-command-container
+          image: lab0mb4/pryvt_chats_command:development
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128M"
+              cpu: "0.5"
+          env:
+            - name: EVENT_SOURCING_CLIENT_URL
+              value: "http://evtsrc-server.default.svc.cluster.local"
+            - name: EVENT_SOURCING_CLIENT_TCP
+              value: "evtsrc-server.default.svc.cluster.local:5521"
+            - name: SIGNING_SECRET
+              value: "example_secret_key"
+          ports:
+            - containerPort: 5519
+          volumeMounts:
+          - mountPath: "/app/db_files"
+            name: pryvt-chats-command-storage
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pryvt-chats-command-svc
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 5519
+  selector:
+    app: pryvt-chats-command

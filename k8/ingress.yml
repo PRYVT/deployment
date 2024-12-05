@@ -50,6 +50,20 @@ spec:
             name: pryvt-posting-command-svc
             port:
               number: 80
+      - path: /api/v1/chats/query/(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: pryvt-chats-query-svc
+            port:
+              number: 80
+      - path: /api/v1/chats/command/(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: pryvt-chats-command-svc
+            port:
+              number: 80
       - path: /(.*)
         pathType: Prefix
         backend:
