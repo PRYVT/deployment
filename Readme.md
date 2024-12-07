@@ -9,14 +9,13 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scrip
 
 chmod 700 get_helm.sh
 
-sudo kubectl -n kube-system delete helmcharts.helm.cattle.io traefik
-
-sudo helm repo add nginx-stable https://helm.nginx.com/stable
-
-sudo helm repo update
 
 sudo rm -rf /var/lib/rancher/k3s/server/manifests/traefik.yaml
 sudo helm uninstall traefik traefik-crd -n kube-system --kubeconfig /etc/rancher/k3s/k3s.yaml
 sudo systemctl restart k3s
 
+sudo helm upgrade --install ingress-nginx ingress-nginx   --repo https://kubernetes.github.io/ingress-nginx   --namespace ingress-nginx --create-namespace --kubeconfig /etc/rancher/k3s/k3s.yaml
+
 ```
+
+todo -> Use a DNS service that supports multiple A records for your domain.
