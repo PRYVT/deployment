@@ -20,7 +20,7 @@ spec:
           imagePullPolicy: Always
           resources:
             limits:
-              memory: "128M"
+              memory: "64M"
               cpu: "0.5"
           env:
             - name: HOST_URL
